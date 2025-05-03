@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 // Create a separate schema instance
 const StudentSchema = new mongoose.Schema(
@@ -19,8 +20,13 @@ const StudentSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
+      unique: true,
       trim: true,
       lowercase: true,
+    },
+    password: {
+      type: String,
+      required: [true, "Password is required"],
     },
     phoneNumber: {
       type: String,
@@ -41,15 +47,41 @@ const StudentSchema = new mongoose.Schema(
         message: "{VALUE} is not a valid program",
       },
     },
+    attendance: [
+      {
+        date: {
+          type: Date,
+          required: true,
+        },
+        status: {
+          type: String,
+          enum: ["present", "absent"],
+          required: true,
+        },
+      },
+    ],
   },
   {
-    timestamps: true, // Add timestamps
+    timestamps: true,
   }
 );
 
 // Add indexes
 StudentSchema.index({ rollNumber: 1 }, { unique: true });
 StudentSchema.index({ email: 1 });
+
+// Hash password before saving
+StudentSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 const Student = mongoose.model("Student", StudentSchema);
 
@@ -137,6 +169,7 @@ router.post("/", async (req, res) => {
       phoneNumber: phoneNumber.trim(),
       currentSemester: Number(currentSemester),
       program,
+      password: "presidency", // Set default password
     });
 
     // Save with validation
@@ -184,6 +217,46 @@ router.delete("/:id", async (req, res) => {
     if (err.kind === "ObjectId") {
       return res.status(404).json({ msg: "Student not found" });
     }
+    res.status(500).json({ msg: "Server Error", error: err.message });
+  }
+});
+
+// Student login route
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    // Check if the password matches the fixed password
+    if (password !== "presidency") {
+      return res.status(400).json({ msg: "Invalid credentials" });
+    }
+
+    const student = await Student.findOne({ email });
+    if (!student) {
+      return res
+        .status(400)
+        .json({ msg: "Student not found. Please contact admin." });
+    }
+
+    // Return student data without password
+    const { password: _, ...studentData } = student.toObject();
+    res.json({ success: true, student: studentData });
+  } catch (err) {
+    console.error("Error in student login:", err);
+    res.status(500).json({ msg: "Server Error", error: err.message });
+  }
+});
+
+// Get student profile
+router.get("/profile/:id", async (req, res) => {
+  try {
+    const student = await Student.findById(req.params.id).select("-password");
+    if (!student) {
+      return res.status(404).json({ msg: "Student not found" });
+    }
+    res.json(student);
+  } catch (err) {
+    console.error("Error fetching student profile:", err);
     res.status(500).json({ msg: "Server Error", error: err.message });
   }
 });
