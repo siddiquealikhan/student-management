@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-// Define the Result schema
+
 const ResultSchema = new mongoose.Schema({
   studentId: {
     type: String,
@@ -34,18 +34,18 @@ const ResultSchema = new mongoose.Schema({
   },
 });
 
-// Create the Result model
+
 const Result = mongoose.model("Result", ResultSchema);
 
-// Initialize Express router
+
 const router = express.Router();
 
-// GET route to fetch result by studentId
+
 router.get("/:studentId", async (req, res) => {
   try {
     const { studentId } = req.params; // Extract studentId from URL parameters
 
-    // Query the database for the result of the student
+    
     const result = await Result.findOne({ studentId });
 
     if (!result) {
@@ -55,7 +55,7 @@ router.get("/:studentId", async (req, res) => {
       });
     }
 
-    // Send the result back as JSON
+
     res.json({ success: true, data: result });
   } catch (error) {
     console.error("Error fetching result:", error);
