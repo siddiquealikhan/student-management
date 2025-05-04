@@ -2,11 +2,11 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./db");
 const mongoose = require("mongoose");
-const resultRoutes = require("./result"); // Import the result routes from result.js
+const resultRoutes = require("./result"); 
 
 console.log("Starting server...");
 
-// Connect to MongoDB and start the server only if the connection is successful
+
 connectDB()
   .then(() => {
     console.log("MongoDB connected successfully");
@@ -36,7 +36,7 @@ connectDB()
       })
     );
 
-    // Logging middleware
+   
     app.use((req, res, next) => {
       console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
       if (req.method === "POST") {
@@ -45,7 +45,7 @@ connectDB()
       next();
     });
 
-    // Routes
+    
     app.use("/api/auth", require("./auth"));
     app.use("/api/students", require("./student"));
 
@@ -56,7 +56,7 @@ connectDB()
       res.send("API Running");
     });
 
-    // Error handling middleware
+   
     app.use((err, req, res, next) => {
       console.error("Global error handler:", err);
       console.error("Error stack:", err.stack);
