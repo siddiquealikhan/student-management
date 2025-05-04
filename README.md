@@ -1,6 +1,6 @@
 # Student Management System
 
-This repository contains the **Mini Project** for the course:
+This repository contains the **Mini Project** for the course: 
 
 > **Front-End Full Stack Development (CSE3150)**  
 > Handled by **Dhanya Ma'am**
