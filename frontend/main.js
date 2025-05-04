@@ -1,7 +1,7 @@
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [currentView, setCurrentView] = React.useState("login");
-  const [userType, setUserType] = React.useState("admin"); // 'admin' or 'student'
+  const [userType, setUserType] = React.useState("admin"); 
   const [userData, setUserData] = React.useState(null);
 
   const handleLogout = () => {
