@@ -261,4 +261,37 @@ router.get("/profile/:id", async (req, res) => {
   }
 });
 
+router.get("/results/:studentId/:semester", async (req, res) => {
+  try {
+    const { studentId, semester } = req.params;
+
+    const studentObjectId = new mongoose.Types.ObjectId(studentId);
+
+    // Directly find the results with the studentId
+    const results = await mongoose.connection.db
+      .collection("results")
+      .findOne({ studentId: studentObjectId });
+
+    if (!results) {
+      return res
+        .status(404)
+        .json({ success: false, msg: "Results not found for this student" });
+    }
+
+    const semesterData = results.semesters.find((s) => s.semester === semester);
+    if (!semesterData) {
+      return res
+        .status(404)
+        .json({ success: false, msg: "Results not found for this semester" });
+    }
+
+    res.json({ success: true, semesterData });
+  } catch (err) {
+    console.error("Error fetching results:", err);
+    res
+      .status(500)
+      .json({ success: false, msg: "Server error", error: err.message });
+  }
+});
+
 module.exports = router;

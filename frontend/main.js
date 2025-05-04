@@ -19,10 +19,10 @@ const App = () => {
           <div className="col-md-7 p-0">
             <div className="h-100 d-flex align-items-center justify-content-center bg-light">
               <img
-                src="https://via.placeholder.com/800x600"
+                src="https://media.getmyuni.com/azure/college-images-test/presidency-university-bangalore/exterior-images-db958af1cce9196efa2ff8b6cdc4d455.jpg"
                 alt="University"
                 className="img-fluid"
-                style={{ maxHeight: "100%", objectFit: "cover" }}
+                style={{ height: "100%", width: "100%", objectFit: "cover" }}
               />
             </div>
           </div>
@@ -32,7 +32,7 @@ const App = () => {
             <div className="h-100 d-flex flex-column justify-content-center">
               <h1 className="text-center mb-4">Student Management System</h1>
 
-              <div className="mb-4">
+              <div className="mb-4 ">
                 <div className="btn-group w-100">
                   <button
                     className={`btn ${
@@ -59,7 +59,7 @@ const App = () => {
 
               {userType === "admin" ? (
                 <>
-                  <div className="mb-3">
+                  <div className="mb-3  d-flex justify-content-center">
                     <button
                       className={`btn ${
                         currentView === "login"
@@ -445,10 +445,208 @@ const timetable = [
   },
 ];
 
+const resultsData = [
+  {
+    semesters: [
+      {
+        semester: "Semester 1",
+        courses: [
+          {
+            courseCode: "CIV1008",
+            courseName: "Basic Engineering Sciences",
+            credits: 2,
+            grade: "A",
+          },
+          {
+            courseCode: "ENG1002",
+            courseName: "Technical English",
+            credits: 2,
+            grade: "A",
+          },
+          {
+            courseCode: "KAN1001",
+            courseName: "Kali Kannada",
+            credits: 1,
+            grade: "A",
+          },
+          {
+            courseCode: "MAT1001",
+            courseName: "Calculus and Linear Algebra",
+            credits: 4,
+            grade: "A",
+          },
+          {
+            courseCode: "MAT1003",
+            courseName: "Applied Statistics",
+            credits: 2,
+            grade: "A",
+          },
+          {
+            courseCode: "MEC1006",
+            courseName: "Engineering Graphics",
+            credits: 2,
+            grade: "O",
+          },
+          {
+            courseCode: "PPS1001",
+            courseName: "Introduction to Soft Skills",
+            credits: 1,
+            grade: "A+",
+          },
+        ],
+        creditsRegistered: 14,
+        creditsCompleted: 14,
+        sgpa: 8.36,
+        cumulative: { creditsRegistered: 14, creditsCompleted: 14, cgpa: 8.36 },
+      },
+      {
+        semester: "Semester 2",
+        courses: [
+          {
+            courseCode: "CHE1018",
+            courseName: "Environmental Science",
+            credits: null,
+            grade: "S",
+          },
+          {
+            courseCode: "CSE1001",
+            courseName: "Problem Solving using JAVA",
+            credits: 3,
+            grade: "B+",
+          },
+          {
+            courseCode: "CSE1002",
+            courseName: "Innovative Projects-Arduino using Embedded 'C'",
+            credits: 2,
+            grade: "A",
+          },
+          {
+            courseCode: "CSE2007",
+            courseName: "Web Technologies",
+            credits: 3,
+            grade: "A",
+          },
+          {
+            courseCode: "ECE1001",
+            courseName: "Elements of Electronics Engineering",
+            credits: 4,
+            grade: "B+",
+          },
+          {
+            courseCode: "ENG2001",
+            courseName: "Advanced English",
+            credits: 2,
+            grade: "B+",
+          },
+          {
+            courseCode: "MAT2004",
+            courseName: "Discrete Mathematical Structures",
+            credits: 3,
+            grade: "A+",
+          },
+          {
+            courseCode: "PHY1002",
+            courseName: "Optoelectronics and Device Physics",
+            credits: 3,
+            grade: "A+",
+          },
+          {
+            courseCode: "PPS1002",
+            courseName: "Soft Skills for Engineers",
+            credits: 1,
+            grade: "A",
+          },
+        ],
+        creditsRegistered: 21,
+        creditsCompleted: 21,
+        sgpa: 7.86,
+        cumulative: { creditsRegistered: 35, creditsCompleted: 35, cgpa: 8.06 },
+      },
+      {
+        semester: "Semester 3",
+        courses: [
+          {
+            courseCode: "CSE2007",
+            courseName: "Design and Analysis of Algorithms",
+            credits: 3,
+            grade: "A",
+          },
+          {
+            courseCode: "CSE2009",
+            courseName: "Computer Organization and Architecture",
+            credits: 3,
+            grade: "A+",
+          },
+          {
+            courseCode: "CSE2010",
+            courseName: "Operating Systems",
+            credits: 3,
+            grade: "A",
+          },
+          {
+            courseCode: "CSE2011",
+            courseName: "Data Communications and Computer Networks",
+            credits: 3,
+            grade: "A",
+          },
+          {
+            courseCode: "CSE2027",
+            courseName: "Fundamentals of Data Analytics",
+            credits: 3,
+            grade: "A+",
+          },
+          {
+            courseCode: "CSE2036",
+            courseName: "Programming in C++",
+            credits: 3,
+            grade: "B+",
+          },
+          {
+            courseCode: "CSE2066",
+            courseName: "Computer Graphics",
+            credits: 3,
+            grade: "A",
+          },
+          {
+            courseCode: "ECE2011",
+            courseName: "Innovative Projects Using Raspberry Pi",
+            credits: 1,
+            grade: "O",
+          },
+          {
+            courseCode: "MAT2003",
+            courseName: "Numerical Methods for Engineers",
+            credits: 2,
+            grade: "A+",
+          },
+          {
+            courseCode: "MGT2023",
+            courseName: "People Management",
+            credits: 3,
+            grade: "B+",
+          },
+          {
+            courseCode: "PPS4004",
+            courseName: "Aptitude Training - Intermediate",
+            credits: 1,
+            grade: "O",
+          },
+        ],
+        creditsRegistered: 28,
+        creditsCompleted: 28,
+        sgpa: 8.21,
+        cumulative: { creditsRegistered: 86, creditsCompleted: 86, cgpa: 8.41 },
+      },
+    ],
+  },
+];
+
 const StudentDashboard = ({ userData, handleLogout }) => {
   const [currentView, setCurrentView] = React.useState("profile");
   const [studentData, setStudentData] = React.useState(userData);
   const [loading, setLoading] = React.useState(false);
+  const [selectedSem, setSelectedSem] = React.useState("");
+  const [semesterData, setSemesterData] = React.useState(null);
 
   React.useEffect(() => {
     fetchStudentData();
@@ -465,6 +663,19 @@ const StudentDashboard = ({ userData, handleLogout }) => {
     } catch (err) {
       console.error("Error fetching student data:", err);
       setLoading(false);
+    }
+  };
+
+  const handleSemesterChange = (e) => {
+    const sem = e.target.value;
+    setSelectedSem(sem);
+    setSemesterData(null);
+
+    if (sem) {
+      const selectedSemester = resultsData[0].semesters.find(
+        (s) => s.semester === sem
+      );
+      setSemesterData(selectedSemester || null);
     }
   };
 
@@ -510,6 +721,14 @@ const StudentDashboard = ({ userData, handleLogout }) => {
                     onClick={() => setCurrentView("timetable")}
                   >
                     Timetable
+                  </button>
+                  <button
+                    className={`list-group-item list-group-item-action ${
+                      currentView === "results" ? "active" : ""
+                    }`}
+                    onClick={() => setCurrentView("results")}
+                  >
+                    Results
                   </button>
                 </div>
               </div>
@@ -641,7 +860,7 @@ const StudentDashboard = ({ userData, handleLogout }) => {
                   )}
                 </div>
               </div>
-            ) : (
+            ) : currentView === "timetable" ? (
               <div className="card">
                 <div className="card-body">
                   <h3 className="card-title">Timetable</h3>
@@ -684,14 +903,70 @@ const StudentDashboard = ({ userData, handleLogout }) => {
                   </div>
                 </div>
               </div>
-            )}
+            ) : currentView === "results" ? (
+              <div className="card">
+                <div className="card-body">
+                  <h3 className="card-title">Results</h3>
+                  <div className="mb-3">
+                    <label htmlFor="semesterSelect" className="form-label">
+                      Select Semester
+                    </label>
+                    <select
+                      id="semesterSelect"
+                      className="form-select"
+                      value={selectedSem}
+                      onChange={handleSemesterChange}
+                    >
+                      <option value="" disabled>
+                        -- Choose a semester --
+                      </option>
+                      {resultsData[0].semesters.map((s) => (
+                        <option key={s.semester} value={s.semester}>
+                          {s.semester}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  {semesterData ? (
+                    <div className="table-responsive mt-4">
+                      <table className="table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Course Code</th>
+                            <th>Course Name</th>
+                            <th>Credits</th>
+                            <th>Grade</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {semesterData.courses.map((c) => (
+                            <tr key={c.courseCode}>
+                              <td>{c.courseCode}</td>
+                              <td>{c.courseName}</td>
+                              <td>{c.credits ?? "-"}</td>
+                              <td>{c.grade}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      <p className="mt-2">
+                        <strong>SGPA:</strong> {semesterData.sgpa} |{" "}
+                        <strong>Cumulative CGPA:</strong>{" "}
+                        {semesterData.cumulative.cgpa}
+                      </p>
+                    </div>
+                  ) : selectedSem ? (
+                    <p>No results available for {selectedSem}</p>
+                  ) : null}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
     </div>
   );
 };
-
 const Dashboard = ({ handleLogout }) => {
   const [students, setStudents] = React.useState([]);
   const [loading, setLoading] = React.useState(true);
