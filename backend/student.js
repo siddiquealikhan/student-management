@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-// Create a separate schema instance
 const StudentSchema = new mongoose.Schema(
   {
     name: {
@@ -66,11 +65,9 @@ const StudentSchema = new mongoose.Schema(
   }
 );
 
-// Add indexes
 StudentSchema.index({ rollNumber: 1 }, { unique: true });
 StudentSchema.index({ email: 1 });
 
-// Hash password before saving
 StudentSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
@@ -85,7 +82,7 @@ StudentSchema.pre("save", async function (next) {
 
 const Student = mongoose.model("Student", StudentSchema);
 
-// Clear all students from the database (for debugging)
+
 router.get("/clear", async (req, res) => {
   try {
     await Student.deleteMany({});
@@ -112,7 +109,6 @@ router.post("/", async (req, res) => {
     const { name, rollNumber, email, phoneNumber, currentSemester, program } =
       req.body;
 
-    // Basic validation
     if (
       !name ||
       !rollNumber ||
@@ -136,7 +132,6 @@ router.post("/", async (req, res) => {
       });
     }
 
-    // Check for existing student with the same roll number
     const existingRollNumber = await Student.findOne({
       rollNumber: rollNumber.trim(),
     });
@@ -149,8 +144,7 @@ router.post("/", async (req, res) => {
         .status(400)
         .json({ msg: "Student with this roll number already exists" });
     }
-
-    // Check for existing student with the same email
+    
     const existingEmail = await Student.findOne({
       email: email.trim().toLowerCase(),
     });
@@ -161,7 +155,6 @@ router.post("/", async (req, res) => {
         .json({ msg: "Student with this email already exists" });
     }
 
-    // Create new student with cleaned data
     const newStudent = new Student({
       name: name.trim(),
       rollNumber: rollNumber.trim(),
@@ -169,17 +162,15 @@ router.post("/", async (req, res) => {
       phoneNumber: phoneNumber.trim(),
       currentSemester: Number(currentSemester),
       program,
-      password: "presidency", // Set default password
+      password: "presidency", 
     });
 
-    // Save with validation
     const student = await newStudent.save();
     console.log("Student saved successfully:", student);
     res.status(201).json(student);
   } catch (err) {
     console.error("Error adding student:", err);
 
-    // Handle validation errors
     if (err.name === "ValidationError") {
       const validationErrors = Object.values(err.errors).map(
         (error) => error.message
@@ -189,7 +180,6 @@ router.post("/", async (req, res) => {
         .json({ msg: "Validation Error", errors: validationErrors });
     }
 
-    // Handle duplicate key errors
     if (err.code === 11000) {
       console.log("Duplicate key error:", err.keyPattern);
       const field = Object.keys(err.keyPattern)[0];
@@ -198,7 +188,6 @@ router.post("/", async (req, res) => {
         .json({ msg: `Student with this ${field} already exists` });
     }
 
-    // Handle other errors
     res.status(500).json({ msg: "Server Error", error: err.message });
   }
 });
@@ -221,12 +210,10 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-// Student login route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check if the password matches the fixed password
     if (password !== "presidency") {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
@@ -238,7 +225,6 @@ router.post("/login", async (req, res) => {
         .json({ msg: "Student not found. Please contact admin." });
     }
 
-    // Return student data without password
     const { password: _, ...studentData } = student.toObject();
     res.json({ success: true, student: studentData });
   } catch (err) {
@@ -247,7 +233,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Get student profile
 router.get("/profile/:id", async (req, res) => {
   try {
     const student = await Student.findById(req.params.id).select("-password");
